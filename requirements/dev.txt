@@ -1,2 +1,8 @@
 -r base.txt
-django-debug-toolbar>=4.0.0
+django-debug-toolbar==4.3.0
+black==24.2.0
+flake8==7.0.0
+flake8-bugbear==24.2.6
+flake8-comprehensions==3.14.0
+flake8-import-order==0.19.2
+pep8-naming==0.13.3
