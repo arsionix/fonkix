@@ -1,0 +1,51 @@
+{% extends "samples/base.html" %}
+
+{% block title %}{{ sample.title }} - Fonkix{% endblock %}
+
+{% block content %}
+
+<p>
+  <a href="{% url 'home' %}">Главная</a> ›
+  <a href="{% url 'catalog' %}?genre={{ sample.genre }}">{{ sample.get_genre_display }}</a> ›
+  {{ sample.title }}
+</p>
+
+<h1>{{ sample.title }}</h1>
+
+<p>
+  Автор: <a href="{% url 'profile' sample.author.username %}">{{ sample.author.username }}</a>
+</p>
+
+<audio controls src="{{ sample.audio_file.url }}"></audio>
+
+<dl>
+  <dt>Жанр</dt><dd>{{ sample.get_genre_display }}</dd>
+  <dt>BPM</dt><dd>{{ sample.bpm }}</dd>
+  {% if sample.musical_key %}
+  <dt>Тональность</dt><dd>{{ sample.musical_key }}</dd>
+  {% endif %}
+</dl>
+
+<p>
+  <a href="{{ sample.audio_file.url }}" download>Скачать бесплатно</a>
+  <button type="button">В избранное</button>
+</p>
+
+<section>
+  <h2>Лицензия</h2>
+  <p>
+    Сэмпл можно использовать в своих треках бесплатно.
+    Указывай автора в описании трека. Перепродажа запрещена.
+  </p>
+</section>
+
+<section>
+  <h2>Похожие сэмплы</h2>
+  {% for related in related_samples %}
+    {% include "samples/includes/sample_card.html" with sample=related %}
+  {% empty %}
+    <p>Пока нет похожих.</p>
+  {% endfor %}
+</section>
+
+{% endblock %}

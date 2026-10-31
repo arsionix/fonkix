@@ -1,0 +1,48 @@
+{% extends "samples/base.html" %}
+
+{% block title %}Каталог сэмплов - Fonkix{% endblock %}
+
+{% block content %}
+
+<h1>Каталог</h1>
+
+<form action="{% url 'catalog' %}" method="get">
+  <input type="search" name="q" placeholder="Поиск..." value="{{ request.GET.q|default:'' }}">
+
+  <fieldset>
+    <legend>Жанр</legend>
+    <label><input type="radio" name="genre" value="drift" {% if request.GET.genre == 'drift' %}checked{% endif %}> Drift</label>
+    <label><input type="radio" name="genre" value="brazilian" {% if request.GET.genre == 'brazilian' %}checked{% endif %}> Brazilian</label>
+    <label><input type="radio" name="genre" value="atmospheric" {% if request.GET.genre == 'atmospheric' %}checked{% endif %}> Atmospheric</label>
+    <label><input type="radio" name="genre" value="wave" {% if request.GET.genre == 'wave' %}checked{% endif %}> Wave</label>
+  </fieldset>
+
+  <button type="submit">Применить</button>
+</form>
+
+<p>Найдено: {{ samples.paginator.count }}</p>
+
+{% for sample in samples %}
+  {% include "samples/includes/sample_card.html" with sample=sample %}
+{% empty %}
+  <p>
+    Ничего не нашли. Попробуй другой запрос или
+    <a href="{% url 'catalog' %}">сбрось фильтры</a>.
+  </p>
+{% endfor %}
+
+{% if samples.has_other_pages %}
+<nav>
+  {% if samples.has_previous %}
+    <a href="?page={{ samples.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}">← Назад</a>
+  {% endif %}
+
+  <span>Страница {{ samples.number }} из {{ samples.paginator.num_pages }}</span>
+
+  {% if samples.has_next %}
+    <a href="?page={{ samples.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}">Вперёд →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% endblock %}

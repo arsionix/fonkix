@@ -1,0 +1,26 @@
+{% extends "samples/base.html" %}
+
+{% block title %}{{ profile_user.username }} - Fonkix{% endblock %}
+
+{% block content %}
+
+<h1>{{ profile_user.username }}</h1>
+
+<p>
+  Сэмплов: {{ samples.count }} ·
+  Лайков: {{ total_likes|default:0 }}
+</p>
+
+{% if user.is_authenticated and user != profile_user %}
+  <button type="button">Подписаться</button>
+{% endif %}
+
+<h2>Сэмплы автора</h2>
+
+{% for sample in samples %}
+  {% include "samples/includes/sample_card.html" with sample=sample %}
+{% empty %}
+  <p>Пока нет сэмплов.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Fonkix{% endblock %}</title>
+    </head>
+    <body>
+        {% include "samples/includes/header.html" %}
+        <main>{% block content %}{% endblock %}</main>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% include "samples/includes/footer.html" %}
+    </body>
+</html>

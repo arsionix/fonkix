@@ -1,0 +1,27 @@
+<article class="sample-card" data-genre="{{ sample.genre }}">
+
+  <h3>
+    <a href="{% url 'sample_detail' sample.pk %}">{{ sample.title }}</a>
+  </h3>
+
+  <p>
+    {{ sample.get_genre_display }} ·
+    {{ sample.bpm }} BPM
+    {% if sample.musical_key %} · {{ sample.musical_key }}{% endif %}
+  </p>
+
+  <audio controls preload="none" src="{{ sample.audio_file.url }}"></audio>
+
+  <p>
+    Автор:
+    <a href="{% url 'profile' sample.author.username %}">
+      {{ sample.author.username|default:"Аноним" }}
+    </a>
+  </p>
+
+  <p>
+    <button type="button">Лайк</button>
+    <a href="{{ sample.audio_file.url }}" download>Скачать</a>
+  </p>
+
+</article>

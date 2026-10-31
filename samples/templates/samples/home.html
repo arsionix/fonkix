@@ -1,0 +1,66 @@
+{% extends "samples/base.html" %}
+
+{% block title %}Fonkix{% endblock %}
+
+{% block content %}
+
+<section>
+  <h1>Сэмплы для фонка.</h1>
+  <p>
+    Найди ковбелл, 808 или вокальный чоп за секунды.
+    Слушай сразу, качай без регистрации.
+  </p>
+
+  <form action="{% url 'catalog' %}" method="get">
+    <input
+      type="search"
+      name="q"
+      placeholder="ковбелл, 808 drift, vocal chop..."
+      value="{{ request.GET.q|default:'' }}"
+    >
+
+    <fieldset>
+      <legend>Жанр</legend>
+      <label><input type="radio" name="genre" value="drift"> Drift</label>
+      <label><input type="radio" name="genre" value="brazilian"> Brazilian</label>
+      <label><input type="radio" name="genre" value="atmospheric"> Atmospheric</label>
+      <label><input type="radio" name="genre" value="wave"> Wave</label>
+    </fieldset>
+
+    <button type="submit">Найти</button>
+  </form>
+</section>
+
+<section>
+  <h2>Свежее</h2>
+
+  {% for sample in samples %}
+    {% include "samples/includes/sample_card.html" with sample=sample %}
+  {% empty %}
+    <p>Пока пусто. <a href="{% url 'upload' %}">Загрузи первый сэмпл</a></p>
+  {% endfor %}
+
+  <p><a href="{% url 'catalog' %}">Смотреть весь каталог</a></p>
+</section>
+
+<section>
+  <h2>Жанры</h2>
+
+  <ul>
+    <li><a href="{% url 'catalog' %}?genre=drift">Drift</a></li>
+    <li><a href="{% url 'catalog' %}?genre=brazilian">Brazilian</a></li>
+    <li><a href="{% url 'catalog' %}?genre=atmospheric">Atmospheric</a></li>
+    <li><a href="{% url 'catalog' %}?genre=wave">Wave</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Стань автором</h2>
+  <p>
+    Загружай свои сэмплы. Получай рейтинг, подписчиков и признание.
+    Скоро - выплаты за популярные звуки.
+  </p>
+  <a href="{% url 'upload' %}">Загрузить сэмпл</a>
+</section>
+
+{% endblock %}

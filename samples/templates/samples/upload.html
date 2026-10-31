@@ -1,0 +1,32 @@
+{% extends "samples/base.html" %}
+
+{% block title %}Загрузить сэмпл - Fonkix{% endblock %}
+
+{% block content %}
+
+<h1>Загрузить сэмпл</h1>
+
+<p>
+  Только свои сэмплы. Все файлы проходят модерацию.
+</p>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div style="color: red">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}
+      {% if field.help_text %}<br><small>{{ field.help_text }}</small>{% endif %}
+      {% if field.errors %}<br><span style="color: red">{{ field.errors }}</span>{% endif %}
+    </p>
+  {% endfor %}
+
+  <button type="submit">Отправить на модерацию</button>
+</form>
+
+{% endblock %}

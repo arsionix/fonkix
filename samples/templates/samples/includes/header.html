@@ -1,0 +1,19 @@
+<header>
+  <a href="{% url 'home' %}"><strong>FONKIX</strong></a>
+
+  <nav>
+    <a href="{% url 'home' %}">Каталог</a>
+    <a href="{% url 'upload' %}">Загрузить</a>
+
+    {% if user.is_authenticated %}
+      <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
+
+      <form action="{% url 'logout' %}" method="post" style="display:inline">
+        {% csrf_token %}
+        <button type="submit">Выйти</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+  </nav>
+</header>

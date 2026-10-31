@@ -1,0 +1,29 @@
+{% extends "samples/base.html" %}
+
+{% block title %}Войти - Fonkix{% endblock %}
+
+{% block content %}
+
+<h1>Вход</h1>
+
+{% if form.errors %}
+  <p>Неверное имя или пароль. Попробуй ещё раз.</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label for="id_username">Имя</label><br>
+    {{ form.username }}
+  </p>
+
+  <p>
+    <label for="id_password">Пароль</label><br>
+    {{ form.password }}
+  </p>
+
+  <button type="submit">Войти</button>
+</form>
+
+{% endblock %}
